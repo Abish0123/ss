@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect, useRef, memo, MouseEventHandler } from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -151,6 +150,7 @@ const SkipToContentLink = () => (
 
 const Header = ({ theme }) => {
   const [scrolled, setScrolled] = useState(false);
+  const navRef = useRef<HTMLUListElement>(null);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   
@@ -204,8 +204,10 @@ const Header = ({ theme }) => {
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
+    const timer = setTimeout(() => navRef.current?.classList.add('animate-in'), 300);
     return () => {
         window.removeEventListener('scroll', handleScroll);
+        clearTimeout(timer);
     };
   }, []);
   
@@ -237,13 +239,8 @@ const Header = ({ theme }) => {
 
   return (
     <header className={headerClasses}>
-      <div className="logo">
-        <AppLink href="/index.html">
-          <img src="https://res.cloudinary.com/dj3vhocuf/image/upload/v1760896759/Blue_Bold_Office_Idea_Logo_250_x_80_px_7_uatyqd.png" alt="Taj Design Consult Logo" className="logo-image" />
-        </AppLink>
-      </div>
       <nav className="main-nav" aria-label="Main navigation">
-        <ul>
+        <ul ref={navRef}>
           {navLinks.map((link) => (
              <li 
               key={link.name} 
@@ -291,6 +288,11 @@ const Header = ({ theme }) => {
           ))}
         </ul>
       </nav>
+      <div className="logo">
+        <AppLink href="/index.html">
+          <img src="https://res.cloudinary.com/dj3vhocuf/image/upload/v1760896759/Blue_Bold_Office_Idea_Logo_250_x_80_px_7_uatyqd.png" alt="Taj Design Consult Logo" className="logo-image" />
+        </AppLink>
+      </div>
       <button 
         ref={burgerMenuRef}
         className="burger-menu" 
