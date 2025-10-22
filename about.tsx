@@ -14,15 +14,29 @@ const servicesSubLinks = [
   { name: 'Sustainability & Energy', href: 'sustainability-energy.html', icon: 'fas fa-leaf', description: 'Integrating green principles for environmentally responsible designs.', image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&auto=format&fit=crop&q=60' },
 ];
 
+const aboutUsSubLinks = [
+  { name: 'Who We Are', href: '#who-we-are', icon: 'fas fa-building' },
+  { name: 'Our Core Values', href: '#our-values', icon: 'fas fa-gem' },
+  { name: 'Meet The Team', href: '#our-team', icon: 'fas fa-users' },
+];
+
 const navLinks = [
   { name: 'Home', href: '/index.html' },
-  { name: 'About Us', href: '/about.html' },
+  { name: 'About Us', href: '/about.html', subLinks: aboutUsSubLinks },
   { name: 'Works/Projects', href: '/index.html#works' },
   { name: 'Services', href: '/index.html#our-services', subLinks: servicesSubLinks },
   { name: 'Blog', href: '/index.html#blog' },
   { name: 'Careers', href: '/careers.html' },
   { name: 'Contact', href: '/contact.html' },
 ];
+
+const teamMembers = [
+    { name: 'John Doe', role: 'CEO & Founder', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&h=500&auto=format&fit=crop&q=60' },
+    { name: 'Jane Smith', role: 'Lead Architect', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&h=500&auto=format&fit=crop&q=60' },
+    { name: 'Mike Johnson', role: 'Head of Engineering', image: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?w=500&h=500&auto=format&fit=crop&q=60' },
+    { name: 'Emily White', role: 'Project Director', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&h=500&auto=format&fit=crop&q=60' },
+];
+
 
 // --- SHARED & LAYOUT COMPONENTS ---
 
@@ -58,7 +72,7 @@ const AppLink = ({ href, className = '', children, onClick, ...props }: {
 };
 
 const MobileNav = ({ isOpen, onClose }) => {
-    const [isServicesOpen, setIsServicesOpen] = useState(false);
+    const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
     const navContainerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -104,8 +118,14 @@ const MobileNav = ({ isOpen, onClose }) => {
         return () => { document.body.style.overflow = ''; };
     }, [isOpen, onClose]);
 
-    const handleServicesToggle = () => {
-        setIsServicesOpen(prev => !prev);
+    useEffect(() => {
+        if (!isOpen) {
+            setOpenSubmenu(null);
+        }
+    }, [isOpen]);
+
+    const handleSubmenuToggle = (linkName: string) => {
+        setOpenSubmenu(prev => prev === linkName ? null : linkName);
     }
     
     return (
@@ -119,17 +139,17 @@ const MobileNav = ({ isOpen, onClose }) => {
                          <li key={link.name}>
                              <AppLink 
                                 href={link.subLinks ? '#' : link.href} 
-                                onClick={link.subLinks ? handleServicesToggle : onClose}
+                                onClick={link.subLinks ? () => handleSubmenuToggle(link.name) : onClose}
                                 aria-haspopup={!!link.subLinks}
-                                aria-expanded={link.subLinks ? isServicesOpen : undefined}
-                                aria-controls={link.subLinks ? `mobile-${link.name}-submenu` : undefined}
-                                id={link.subLinks ? `mobile-${link.name}-toggle` : undefined}
+                                aria-expanded={link.subLinks ? openSubmenu === link.name : undefined}
+                                aria-controls={link.subLinks ? `mobile-${link.name.toLowerCase().replace(' ', '-')}-submenu` : undefined}
+                                id={link.subLinks ? `mobile-${link.name.toLowerCase().replace(' ', '-')}-toggle` : undefined}
                              >
                                  {link.name}
-                                 {link.subLinks && <i className={`fas fa-chevron-down dropdown-indicator ${isServicesOpen ? 'open' : ''}`} aria-hidden="true"></i>}
+                                 {link.subLinks && <i className={`fas fa-chevron-down dropdown-indicator ${openSubmenu === link.name ? 'open' : ''}`} aria-hidden="true"></i>}
                              </AppLink>
                              {link.subLinks && (
-                                 <ul id={`mobile-${link.name}-submenu`} className={`mobile-submenu ${isServicesOpen ? 'open' : ''}`} aria-hidden={!isServicesOpen}>
+                                 <ul id={`mobile-${link.name.toLowerCase().replace(' ', '-')}-submenu`} className={`mobile-submenu ${openSubmenu === link.name ? 'open' : ''}`} aria-hidden={openSubmenu !== link.name}>
                                      {link.subLinks.map(subLink => (
                                          <li key={subLink.name}><AppLink href={subLink.href} onClick={onClose}>{subLink.name}</AppLink></li>
                                      ))}
@@ -151,46 +171,51 @@ const SkipToContentLink = () => (
 
 const Header = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   
   const burgerMenuRef = useRef<HTMLButtonElement>(null);
-  const servicesToggleRef = useRef<HTMLAnchorElement>(null);
-  const servicesDropdownContainerRef = useRef<HTMLLIElement>(null);
+  const dropdownContainerRefs = useRef<Record<string, HTMLLIElement | null>>({});
 
   const closeMobileNav = () => {
     setIsMobileNavOpen(false);
     burgerMenuRef.current?.focus();
   };
 
-  const closeServicesDropdown = (shouldFocusToggle = true) => {
-    if (isServicesDropdownOpen) {
-      setIsServicesDropdownOpen(false);
-      if (shouldFocusToggle) {
-        servicesToggleRef.current?.focus();
-      }
+  const closeDropdowns = (shouldFocusToggle = true) => {
+    if (!openDropdown) return;
+
+    if (!shouldFocusToggle) {
+        setOpenDropdown(null);
+        return;
     }
+
+    const toggleButton = dropdownContainerRefs.current[openDropdown]?.querySelector('a');
+    if (toggleButton) {
+        toggleButton.focus();
+    }
+    setOpenDropdown(null);
   };
 
   useEffect(() => {
-    if (isServicesDropdownOpen) {
-      const firstItem = servicesDropdownContainerRef.current?.querySelector<HTMLAnchorElement>('.dropdown-link-item');
+    if (openDropdown) {
+      const firstItem = dropdownContainerRefs.current[openDropdown]?.querySelector<HTMLAnchorElement>('.dropdown-menu a');
       firstItem?.focus();
     }
-  }, [isServicesDropdownOpen]);
+  }, [openDropdown]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        closeServicesDropdown();
+        closeDropdowns();
       }
     };
     const handleClickOutside = (event: MouseEvent) => {
-      if (servicesDropdownContainerRef.current && !servicesDropdownContainerRef.current.contains(event.target as Node)) {
-        closeServicesDropdown(false);
-      }
+        if (openDropdown && dropdownContainerRefs.current[openDropdown] && !dropdownContainerRefs.current[openDropdown]!.contains(event.target as Node)) {
+            closeDropdowns(false);
+        }
     };
 
-    if (isServicesDropdownOpen) {
+    if (openDropdown) {
       document.addEventListener('keydown', handleKeyDown);
       document.addEventListener('mousedown', handleClickOutside);
     }
@@ -198,16 +223,20 @@ const Header = () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isServicesDropdownOpen]);
+  }, [openDropdown]);
   
-  const handleServicesClick = (e: React.MouseEvent) => {
+  const handleDropdownToggle = (e: React.MouseEvent, linkName: string) => {
     e.preventDefault();
-    setIsServicesDropdownOpen(prev => !prev);
+    setOpenDropdown(prev => (prev === linkName ? null : linkName));
   };
 
   const handleDropdownItemKeyDown = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
+    if (!openDropdown) return;
+    const container = dropdownContainerRefs.current[openDropdown];
+    if (!container) return;
+
     const items = Array.from(
-      servicesDropdownContainerRef.current?.querySelectorAll<HTMLAnchorElement>('.dropdown-link-item') || []
+      container.querySelectorAll<HTMLAnchorElement>('.dropdown-link-item')
     );
     const currentIndex = items.indexOf(e.currentTarget);
 
@@ -218,9 +247,9 @@ const Header = () => {
       e.preventDefault();
       items[(currentIndex - 1 + items.length) % items.length]?.focus();
     } else if (e.key === 'Tab' && !e.shiftKey && currentIndex === items.length - 1) {
-      closeServicesDropdown(false);
+      closeDropdowns(false);
     } else if (e.key === 'Tab' && e.shiftKey && currentIndex === 0) {
-      closeServicesDropdown(false);
+      closeDropdowns(false);
     }
   };
 
@@ -236,23 +265,22 @@ const Header = () => {
           {navLinks.map((link) => (
              <li 
               key={link.name} 
-              className={`${link.subLinks ? 'has-dropdown' : ''} ${link.name === 'Services' && isServicesDropdownOpen ? 'open' : ''}`}
-              ref={link.name === 'Services' ? servicesDropdownContainerRef : null}
+              className={`${link.subLinks ? 'has-dropdown' : ''} ${openDropdown === link.name ? 'open' : ''}`}
+              ref={(el) => dropdownContainerRefs.current[link.name] = el}
             >
               <AppLink 
-                ref={link.name === 'Services' ? servicesToggleRef : null}
                 href={link.href}
-                id={link.name === 'Services' ? 'services-menu-toggle' : undefined}
-                onClick={link.name === 'Services' ? handleServicesClick : undefined}
+                id={`${link.name.toLowerCase().replace(' ', '-')}-menu-toggle`}
+                onClick={(e) => link.subLinks && handleDropdownToggle(e, link.name)}
                 aria-haspopup={!!link.subLinks}
-                aria-expanded={link.name === 'Services' ? isServicesDropdownOpen : undefined}
-                aria-controls={link.name === 'Services' ? 'services-dropdown-menu' : undefined}
+                aria-expanded={openDropdown === link.name}
+                aria-controls={link.subLinks ? `${link.name.toLowerCase().replace(' ', '-')}-dropdown-menu` : undefined}
               >
                 {link.name}
                 {link.subLinks && <i className="fas fa-chevron-down dropdown-indicator" aria-hidden="true"></i>}
               </AppLink>
               {link.subLinks && (
-                <div id="services-dropdown-menu" className="dropdown-menu" role="menu" aria-labelledby="services-menu-toggle">
+                <div id={`${link.name.toLowerCase().replace(' ', '-')}-dropdown-menu`} className="dropdown-menu" role="menu" aria-labelledby={`${link.name.toLowerCase().replace(' ', '-')}-menu-toggle`}>
                   <ul className="dropdown-links" role="none">
                       {link.subLinks.map((subLink, index) => (
                           <li role="presentation" key={subLink.name}>
@@ -261,7 +289,7 @@ const Header = () => {
                                   role="menuitem"
                                   onKeyDown={handleDropdownItemKeyDown}
                                   className="dropdown-link-item"
-                                  onClick={() => setIsServicesDropdownOpen(false)}
+                                  onClick={() => setOpenDropdown(null)}
                                   style={{ '--delay': `${index * 0.05}s` } as React.CSSProperties}
                               >
                                   <i className={`${subLink.icon} dropdown-link-icon`} aria-hidden="true"></i>
@@ -487,6 +515,27 @@ const Footer = () => {
     )
 }
 
+const TeamSection = () => (
+    <section id="our-team" className="content-section">
+        <div className="container">
+            <h2 className="section-title scroll-trigger fade-up" style={{ textAlign: 'center' }}>Meet Our <strong>Leadership</strong></h2>
+            <div className="team-grid">
+                {teamMembers.map((member, index) => (
+                    <div className="team-member-card scroll-trigger fade-up" key={index} style={{ transitionDelay: `${index * 0.1}s` }}>
+                        <div className="team-member-image">
+                            <img src={member.image} alt={`Portrait of ${member.name}`} />
+                        </div>
+                        <div className="team-member-info">
+                            <h3>{member.name}</h3>
+                            <p>{member.role}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+);
+
 const AboutPage = () => {
 
     const values = [
@@ -553,6 +602,8 @@ const AboutPage = () => {
             </div>
           </div>
       </section>
+
+      <TeamSection />
 
       <CallToAction />
     </>
