@@ -242,6 +242,7 @@ html, body {
   color: var(--accent-color);
   text-shadow: var(--accent-color-shadow);
   outline: none;
+  top: 4px;
 }
 .app-header.on-light .main-nav a:hover,
 .app-header.on-light .main-nav a:focus {
