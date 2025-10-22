@@ -1,5 +1,6 @@
 
-import React, { useState, useEffect, useRef, memo, MouseEventHandler } from 'react';
+
+import React, { useState, useEffect, useRef, memo, MouseEventHandler, forwardRef } from 'react';
 import { createRoot } from 'react-dom/client';
 
 declare const gsap: any;
@@ -11,6 +12,7 @@ const servicesSubLinks = [
   { name: 'Engineering Consultancy', href: 'engineering-consultancy.html', icon: 'fas fa-cogs', description: 'Expert technical advice and solutions for robust project outcomes.', image: 'https://images.unsplash.com/photo-1518692113669-e34fa251a37c?w=800&auto=format&fit=crop&q=60' },
   { name: 'Project Management Consultancy', href: 'project-management.html', icon: 'fas fa-tasks', description: 'Overseeing projects from inception to completion on time and budget.', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop&q=60' },
   { name: 'Sustainability & Energy', href: 'sustainability-energy.html', icon: 'fas fa-leaf', description: 'Integrating green principles for environmentally responsible designs.', image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&auto=format&fit=crop&q=60' },
+  { name: 'Approvals for Construction', href: 'approvals-for-construction.html', icon: 'fas fa-stamp', description: 'Expert navigation of regulatory landscapes to secure all necessary construction permits and approvals efficiently.', image: 'https://images.unsplash.com/photo-1563514227-92095935a879?w=800&auto=format&fit=crop&q=60' },
 ];
 
 const navLinks = [
@@ -25,13 +27,13 @@ const navLinks = [
 
 // --- SHARED & LAYOUT COMPONENTS ---
 
-const AppLink = ({ href, className = '', children, onClick, ...props }: {
+const AppLink = forwardRef<HTMLAnchorElement, {
   href: string;
   className?: string;
   children: React.ReactNode;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
   [key: string]: any;
-}) => {
+}>(({ href, className = '', children, onClick, ...props }, ref) => {
     const isToggle = href === '#';
 
     const handleClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
@@ -46,6 +48,7 @@ const AppLink = ({ href, className = '', children, onClick, ...props }: {
 
     return (
         <a 
+            ref={ref}
             href={href} 
             className={className} 
             onClick={onClick ? handleClick : undefined} 
@@ -54,7 +57,7 @@ const AppLink = ({ href, className = '', children, onClick, ...props }: {
             {children}
         </a>
     );
-};
+});
 
 const MobileNav = ({ isOpen, onClose }) => {
     const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -174,7 +177,7 @@ const Header = ({ theme }) => {
 
   useEffect(() => {
     if (isServicesDropdownOpen) {
-      const firstItem = servicesDropdownContainerRef.current?.querySelector<HTMLAnchorElement>('.dropdown-link-item');
+      const firstItem = servicesDropdownContainerRef.current?.querySelector<HTMLAnchorElement>('.dropdown-menu a');
       firstItem?.focus();
     }
   }, [isServicesDropdownOpen]);
@@ -210,12 +213,12 @@ const Header = ({ theme }) => {
         clearTimeout(timer);
     };
   }, []);
-  
+
   const handleServicesClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsServicesDropdownOpen(prev => !prev);
   };
-
+  
   const handleDropdownItemKeyDown = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
     const items = Array.from(
       servicesDropdownContainerRef.current?.querySelectorAll<HTMLAnchorElement>('.dropdown-link-item') || []
@@ -239,15 +242,10 @@ const Header = ({ theme }) => {
 
   return (
     <header className={headerClasses}>
-      <div className="logo">
-        <AppLink href="/index.html">
-          <img src="https://res.cloudinary.com/dj3vhocuf/image/upload/v1760896759/Blue_Bold_Office_Idea_Logo_250_x_80_px_7_uatyqd.png" alt="Taj Design Consult Logo" className="logo-image" />
-        </AppLink>
-      </div>
       <nav className="main-nav" aria-label="Main navigation">
         <ul ref={navRef}>
           {navLinks.map((link) => (
-             <li 
+            <li 
               key={link.name} 
               className={`${link.subLinks ? 'has-dropdown' : ''} ${link.name === 'Services' && isServicesDropdownOpen ? 'open' : ''}`}
               ref={link.name === 'Services' ? servicesDropdownContainerRef : null}
@@ -293,9 +291,14 @@ const Header = ({ theme }) => {
           ))}
         </ul>
       </nav>
-      <button 
+      <div className="logo">
+        <AppLink href="/index.html">
+          <img src="https://res.cloudinary.com/dj3vhocuf/image/upload/v1760896759/Blue_Bold_Office_Idea_Logo_250_x_80_px_7_uatyqd.png" alt="Taj Design Consult Logo" className="logo-image" />
+        </AppLink>
+      </div>
+      <button
         ref={burgerMenuRef}
-        className="burger-menu" 
+        className="burger-menu"
         onClick={() => setIsMobileNavOpen(true)}
         aria-label="Open navigation menu"
         aria-controls="mobile-nav"
@@ -303,7 +306,7 @@ const Header = ({ theme }) => {
       >
         <i className="fas fa-bars" aria-hidden="true"></i>
       </button>
-      <MobileNav isOpen={isMobileNavOpen} onClose={closeMobileNav} />
+      <MobileNav isOpen={isMobileNavOpen} onClose={() => setIsMobileNavOpen(false)} />
     </header>
   );
 };
@@ -593,7 +596,7 @@ const App = () => {
             <SkipToContentLink />
             <CustomCursor />
             <WhatsAppChatWidget />
-            <Header theme="dark" />
+            <Header theme="light" />
             <div className="main-container">
                 <LeftSidebar />
                 <main className="main-content" id="main-content" tabIndex={-1}>
