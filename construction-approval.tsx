@@ -544,7 +544,7 @@ const ServicePage = () => {
   ];
 
   const relatedProjects = [
-    { image: "https://images.unsplash.com/photo-1581092446337-234557050003?w=800&auto=format&fit=crop&q=60", title: "Al Sadd Commercial Tower", category: "Full Permit Lifecycle Management" },
+    { image: "https://etimg.etb2bimg.com/photo/123564565.cms", title: "Al Sadd Commercial Tower", category: "Full Permit Lifecycle Management" },
     { image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop&q=60", title: "West Bay Lagoon Villas", category: "Multi-Authority NOC Coordination" },
     { image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=60", title: "Industrial Area Warehouse Complex", category: "Civil Defense & Environmental Clearances" },
   ];
