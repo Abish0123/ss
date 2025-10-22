@@ -1,9 +1,8 @@
-
 :root {
   --dark-bg: #111111;
   --dark-bg-secondary: #1c1c1c;
   --text-light: #ffffff;
-  --text-dark: #FFFFFF;
+  --text-dark: #111111;
   --accent-color: #D4AF37;
   --accent-color-shadow: 0 0 10px #D4AF37, 0 0 20px #B89B32, 0 0 30px #9C822A;
   --accent-color-shadow-small: 0 0 5px #D4AF37, 0 0 10px #B89B32;
@@ -174,7 +173,7 @@ html, body {
   left: 80px;
   width: calc(100% - 80px);
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
   background-color: #000000;
@@ -190,38 +189,10 @@ html, body {
     background-color: rgba(0, 0, 0, 0.9);
 }
 
-.logo .logo-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    gap: 15px;
+.logo-image {
+    height: 60px;
+    width: auto;
 }
-.logo-taj {
-    font-size: 48px;
-    font-weight: 200;
-    line-height: 1;
-}
-.logo-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transform: translateY(6px);
-}
-.logo-line {
-    width: 80px;
-    height: 1.5px;
-    background-color: var(--accent-color);
-}
-.logo-consultancy {
-    font-size: 16px;
-    letter-spacing: 1.5px;
-    color: var(--accent-color);
-    font-weight: 400;
-}
-.app-header.on-dark .logo-taj { color: var(--text-light); }
-.app-header.on-light .logo-taj { color: var(--text-dark); }
-.app-header:not([class*="on-"]) .logo-taj { color: var(--text-dark); }
-
 
 .main-nav ul {
   list-style: none;
@@ -242,21 +213,13 @@ html, body {
   position: relative;
   padding-bottom: 5px;
   transition: color 0.3s ease;
+  color: #fff;
 }
 
-.app-header.on-dark .main-nav a {
-    color: var(--text-light);
-}
-.app-header.on-light .main-nav a {
-    color: var(--text-dark);
+.main-nav a:hover {
+    color: var(--accent-color);
 }
 
-.logo-image {
-    height: 80px;
-    width: auto;
-    position: relative;
-    left: -120px;
-}
 
 .main-nav a::after {
   content: '';
@@ -278,8 +241,6 @@ html, body {
     display: flex;
     align-items: center;
     gap: 5px;
-    position: relative;
-    top: 4px;
 }
 
 .dropdown-indicator {
@@ -307,13 +268,10 @@ html, body {
   box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
 
-.app-header.on-dark .dropdown-menu {
+.app-header.on-dark .dropdown-menu,
+.app-header.on-light .dropdown-menu {
     background-color: #222;
     border: 1px solid var(--border-light);
-}
-.app-header.on-light .dropdown-menu {
-    background-color: #000000;
-    border: 1px solid #eee;
 }
 
 .has-dropdown.open .dropdown-menu {
@@ -343,6 +301,7 @@ html, body {
   font-size: 14px;
   letter-spacing: 0;
   white-space: nowrap;
+  color: #ccc;
 }
 .dropdown-link-item::after {
   display: none;
@@ -356,16 +315,8 @@ html, body {
   color: var(--accent-color);
 }
 
-.app-header.on-dark .dropdown-link-item { color: #ccc; }
-.app-header.on-light .dropdown-link-item { color: #ccc; }
-
-.app-header.on-dark .dropdown-link-item:hover,
-.app-header.on-dark .dropdown-link-item:focus {
-  background-color: rgba(255, 255, 255, 0.08);
-  color: #fff;
-}
-.app-header.on-light .dropdown-link-item:hover,
-.app-header.on-light .dropdown-link-item:focus {
+.dropdown-link-item:hover,
+.dropdown-link-item:focus {
   background-color: rgba(255, 255, 255, 0.08);
   color: #fff;
 }
@@ -375,7 +326,7 @@ html, body {
     display: none;
     background: none;
     border: none;
-    color: var(--text-dark);
+    color: #fff;
     font-size: 24px;
     z-index: 1002;
     padding: 5px;
@@ -415,6 +366,7 @@ html, body {
 .mobile-nav ul {
     list-style: none;
     text-align: center;
+    padding: 0;
 }
 
 .mobile-nav ul li {
@@ -540,7 +492,7 @@ html, body {
   margin-bottom: 40px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #000;
+  color: #111;
 }
 
 .section-title strong {
@@ -633,11 +585,11 @@ html, body {
 }
 .project-card-content {
     padding: 25px;
+    color: #111;
 }
 .project-card-content h3 {
     font-size: 20px;
     margin-bottom: 5px;
-    color: #000;
 }
 .project-card-content p {
     color: #777;
@@ -686,7 +638,7 @@ html, body {
   display: inline-block;
   padding: 15px 40px;
   background-color: var(--accent-color);
-  color: var(--text-dark);
+  color: var(--dark-bg);
   text-decoration: none;
   text-transform: uppercase;
   font-size: 14px;
@@ -878,31 +830,19 @@ html, body {
     .service-sidebar-image { display: none; }
     .service-list { column-count: 1; }
     .project-grid { grid-template-columns: repeat(2, 1fr); }
-
-    /* Fix for mobile header layout */
-    .app-header {
-      justify-content: space-between;
-    }
-    .logo-image {
-      position: static;
-      left: auto;
-      height: 60px; /* Adjust size for tablet */
-    }
 }
 @media (max-width: 768px) {
+    .app-header {
+      padding: 15px 20px;
+    }
+    .logo-image {
+        height: 45px;
+    }
     .content-section { padding: 80px 20px; }
     .service-hero-section { padding: 140px 20px 80px; }
     .service-hero-section h1 { font-size: 36px; }
     .copyright-section { flex-direction: column; gap: 20px; text-align: center; }
     .project-grid { grid-template-columns: 1fr; }
-
-    /* Further adjustments for smaller screens */
-    .app-header {
-        padding: 15px 20px;
-    }
-    .logo-image {
-        height: 50px;
-    }
 }
 @media (max-width: 576px) {
     .cta-section h2 { font-size: 28px; }
