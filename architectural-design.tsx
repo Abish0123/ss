@@ -552,7 +552,7 @@ const ServicePage = () => {
   const relatedProjects = [
     { image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop&q=60", title: "The Waterfront Villa", category: "Residential Design" },
     { image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=60", title: "Innovate Corporate HQ", category: "Commercial Architecture" },
-    { image: "https://images.unsplash.com/photo-1582463143926-78564f24f31d?w=800&auto=format&fit=crop&q=60", title: "Serenity Cultural Center", category: "Public & Cultural Spaces" },
+    { image: "https://d2p6r8xzxr1n9h.cloudfront.net/userfiles/usm/2014/01/15/514ca92b-8eca-472b-b4cc-cfa46393c0b9.jpg;w=480;h=320;bgcolor=000", title: "Serenity Cultural Center", category: "Public & Cultural Spaces" },
   ];
 
   return (
