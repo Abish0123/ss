@@ -242,7 +242,6 @@ html, body {
   color: var(--accent-color);
   text-shadow: var(--accent-color-shadow);
   outline: none;
-  top: 4px;
 }
 .app-header.on-light .main-nav a:hover,
 .app-header.on-light .main-nav a:focus {
@@ -254,6 +253,7 @@ html, body {
     display: flex;
     align-items: center;
     gap: 5px;
+    top: 4px;
 }
 .dropdown-indicator-wrapper { 
     display: inline-flex;
