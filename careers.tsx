@@ -545,14 +545,20 @@ const ApplicationForm = () => {
              }
              return;
         }
-        setIsSubmitted(true);
-    };
 
-    const handleResetForm = () => {
-        setIsSubmitted(false); setFormData({ name: '', email: '', phone: '', position: careerOpenings[0].title, coverLetter: '' });
-        setFileName(''); setTouched({});
-        const fileInput = document.getElementById('cv') as HTMLInputElement; if(fileInput) fileInput.value = '';
-        document.getElementById('name')?.focus();
+        const subject = encodeURIComponent(`Job Application: ${formData.position}`);
+        const body = encodeURIComponent(
+            `A new job application has been submitted with the following details:\n\n` +
+            `Position Applying For: ${formData.position}\n` +
+            `Full Name: ${formData.name}\n` +
+            `Email: ${formData.email}\n` +
+            `Phone: ${formData.phone}\n\n` +
+            `Cover Letter:\n${formData.coverLetter}`
+        );
+    
+        window.location.href = `mailto:info@tajdc.com?subject=${subject}&body=${body}`;
+        
+        setIsSubmitted(true);
     };
 
     const isFormValid = Object.keys(validate(formData, fileName)).length === 0;
@@ -604,8 +610,7 @@ const ApplicationForm = () => {
              <div className={`success-message ${isSubmitted ? 'visible' : ''}`} aria-hidden={!isSubmitted} aria-live="polite">
                 <i className="fas fa-check-circle" aria-hidden="true"></i>
                 <h3 ref={successMessageRef} tabIndex={-1}>Thank You!</h3>
-                <p>Your application has been submitted successfully. We will review your information and be in touch shortly.</p>
-                 <button onClick={handleResetForm} className="submit-btn" style={{marginTop: '20px', width: 'auto'}}>Submit Another Application</button>
+                <p>Your email client is opening. Please attach your CV/Resume and send the pre-filled email to complete your application.</p>
             </div>
         </div>
     );
