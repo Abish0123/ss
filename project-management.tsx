@@ -545,7 +545,7 @@ const ServicePage = () => {
   const relatedProjects = [
     { image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&auto=format&fit=crop&q=60", title: "Metropolis Tower", category: "High-Rise Construction" },
     { image: "https://images.unsplash.com/photo-1572949645841-094f3a9c4c94?w=800&auto=format&fit=crop&q=60", title: "Coastal Resort Complex", category: "Hospitality Project Management" },
-    { image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&auto=format&fit=crop&q=60", title: "Civic Center Redevelopment", category: "Public Sector Projects" },
+    { image: "https://website-media.com/beacon-hospitality/beacon-hospitality-2024/2023/08/13174251/Structural-engineer-and-architect-working-with-blueprints.jpeg", title: "Civic Center Redevelopment", category: "Public Sector Projects" },
   ];
 
   return (
