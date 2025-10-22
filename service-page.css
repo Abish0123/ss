@@ -637,6 +637,7 @@ html, body {
 .project-card-content h3 {
     font-size: 20px;
     margin-bottom: 5px;
+    color: #000;
 }
 .project-card-content p {
     color: #777;
