@@ -1140,7 +1140,7 @@ const HomePage = () => {
   
   const workItems = [
     { 
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=60", 
+      image: "https://res.cloudinary.com/dj3vhocuf/image/upload/v1761148974/Screenshot_2025-10-22_212932_uarlk8.png", 
       meta: "Design and Build of Office Interior", 
       title: "TrustLink Office", 
       description: "End-to-end office interior design and on-site supervision, ensuring QCDD/NFPA and Baladiya compliance for a smooth, approval-ready fit-out." 
