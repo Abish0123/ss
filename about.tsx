@@ -239,6 +239,11 @@ const Header = ({ theme }) => {
 
   return (
     <header className={headerClasses}>
+      <div className="logo">
+        <AppLink href="/index.html">
+          <img src="https://res.cloudinary.com/dj3vhocuf/image/upload/v1760896759/Blue_Bold_Office_Idea_Logo_250_x_80_px_7_uatyqd.png" alt="Taj Design Consult Logo" className="logo-image" />
+        </AppLink>
+      </div>
       <nav className="main-nav" aria-label="Main navigation">
         <ul ref={navRef}>
           {navLinks.map((link) => (
@@ -288,11 +293,6 @@ const Header = ({ theme }) => {
           ))}
         </ul>
       </nav>
-      <div className="logo">
-        <AppLink href="/index.html">
-          <img src="https://res.cloudinary.com/dj3vhocuf/image/upload/v1760896759/Blue_Bold_Office_Idea_Logo_250_x_80_px_7_uatyqd.png" alt="Taj Design Consult Logo" className="logo-image" />
-        </AppLink>
-      </div>
       <button 
         ref={burgerMenuRef}
         className="burger-menu" 
