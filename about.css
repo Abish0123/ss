@@ -1,9 +1,11 @@
+
 :root {
   --dark-bg: #111111;
   --dark-bg-secondary: #1c1c1c;
   --text-light: #ffffff;
-  --text-dark: #FFFFFF;
+  --text-dark: #111111;
   --accent-color: #D4AF37;
+  --accent-color-dark-text: #8C751C;
   --accent-color-shadow: 0 0 10px #D4AF37, 0 0 20px #B89B32, 0 0 30px #9C822A;
   --accent-color-shadow-small: 0 0 5px #D4AF37, 0 0 10px #B89B32;
   --accent-gray: #888;
@@ -209,11 +211,14 @@ html, body {
 .main-nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background-color: var(--accent-color); transition: width 0.3s ease; }
 .main-nav a:hover::after, .main-nav a:focus::after { width: 100%; }
 .main-nav ul li.has-dropdown > a { display: flex; align-items: center; gap: 5px; position: relative; top: 4px; }
+.dropdown-indicator-wrapper { display: inline-block; }
 .dropdown-indicator { font-size: 10px; transition: transform 0.3s ease; }
 .has-dropdown.open .dropdown-indicator { transform: rotate(180deg); }
 .dropdown-menu { position: absolute; top: 100%; left: -20px; background-color: rgba(255, 255, 255, 0.95); border-radius: 4px; padding: 10px 0; list-style: none; min-width: 280px; z-index: 1001; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border: 1px solid #eee; display: flex; flex-direction: column; align-items: flex-start; }
 .has-dropdown.open .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
 .dropdown-menu li { opacity: 1; transform: none; width: 100%; }
+.dropdown-link-item .dropdown-link-icon { margin-right: 15px; font-size: 16px; width: 20px; text-align: center; color: var(--accent-color); }
+.dropdown-link-item { display: flex; align-items: center; padding: 12px 15px; border-radius: 6px; text-decoration: none; transition: background-color 0.2s ease, color 0.2s ease; font-weight: 400; text-transform: none; font-size: 14px; letter-spacing: 0; white-space: nowrap; }
 .dropdown-menu li a { padding: 8px 20px; display: block; white-space: nowrap; font-size: 13px; text-transform: none; letter-spacing: 0.5px; font-weight: 400; color: var(--text-dark); }
 .dropdown-menu li a::after { display: none; }
 .dropdown-menu li a:hover, .dropdown-menu li a:focus { background-color: var(--accent-color); color: var(--text-dark) !important; text-shadow: none !important; }
