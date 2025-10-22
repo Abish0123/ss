@@ -540,7 +540,7 @@ html, body {
   margin-bottom: 40px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: var(--text-dark);
+  color: #000;
 }
 
 .section-title strong {
