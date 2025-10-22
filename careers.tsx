@@ -311,4 +311,4 @@ const Header = () => {
         ref={burgerMenuRef}
         className="burger-menu" 
         onClick={() => setIsMobileNavOpen(true)}
-        aria-label="Open
+        aria-label="Open menu"
