@@ -149,7 +149,8 @@ const SkipToContentLink = () => (
     </a>
 );
 
-const Header = () => {
+const Header = ({ theme }) => {
+  const [scrolled, setScrolled] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   
@@ -199,6 +200,14 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isServicesDropdownOpen]);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   
   const handleServicesClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -224,8 +233,10 @@ const Header = () => {
     }
   };
 
+  const headerClasses = `app-header ${scrolled ? 'scrolled' : ''} on-${theme}`;
+
   return (
-    <header className={`app-header`}>
+    <header className={headerClasses}>
       <div className="logo">
         <AppLink href="/index.html">
           <img src="https://res.cloudinary.com/dj3vhocuf/image/upload/v1760896759/Blue_Bold_Office_Idea_Logo_250_x_80_px_7_uatyqd.png" alt="Taj Design Consult Logo" className="logo-image" />
@@ -249,7 +260,11 @@ const Header = () => {
                 aria-controls={link.name === 'Services' ? 'services-dropdown-menu' : undefined}
               >
                 {link.name}
-                {link.subLinks && <i className="fas fa-chevron-down dropdown-indicator" aria-hidden="true"></i>}
+                {link.subLinks && (
+                  <span className="dropdown-indicator-wrapper">
+                    <i className="fas fa-chevron-down dropdown-indicator" aria-hidden="true"></i>
+                  </span>
+                )}
               </AppLink>
               {link.subLinks && (
                 <div id="services-dropdown-menu" className="dropdown-menu" role="menu" aria-labelledby="services-menu-toggle">
@@ -576,7 +591,7 @@ const App = () => {
             <SkipToContentLink />
             <CustomCursor />
             <WhatsAppChatWidget />
-            <Header />
+            <Header theme="dark" />
             <div className="main-container">
                 <LeftSidebar />
                 <main className="main-content" id="main-content" tabIndex={-1}>
