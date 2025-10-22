@@ -572,7 +572,7 @@ const ServicePage = () => {
                     <p>By entrusting us with your project approvals, you mitigate risks, avoid costly delays, and ensure full compliance with all local laws and building codes. Our established relationships with key authorities and our meticulous approach to documentation management allow us to anticipate hurdles and resolve issues proactively. We provide complete transparency throughout the process, giving you the peace of mind to focus on your core project objectives while we handle the critical administrative and regulatory groundwork.</p>
                 </div>
                 <div className="service-sidebar-image">
-                  <img src="https://media.istockphoto.com/id/154962832/photo/machine-blueprint-outline-design-paperwork-document.jpg?s=612x612&w=0&k=20&c=F9UR8XhvUC3kt-LZjjxpN8pcp_ZT6yKFQ9NFWvAAoFo=" alt="Official documents and a hard hat on a blueprint." />
+                  <img src="https://media.istockphoto.com/id/1486553791/photo/approved-buildings-permit-concept-with-approved-residential-building-project.jpg?s=612x612&w=0&k=20&c=tCqipzCoTY5usczu8nhsCGSliycCPOEqYQqnPHkHVcw=" alt="Official documents and a hard hat on a blueprint." />
                 </div>
               </div>
 
