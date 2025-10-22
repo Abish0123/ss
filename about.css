@@ -253,6 +253,7 @@ html, body {
     display: flex;
     align-items: center;
     gap: 5px;
+    top: 4px;
 }
 .dropdown-indicator-wrapper { 
     display: inline-flex;
