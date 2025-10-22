@@ -13,15 +13,14 @@ export default defineConfig(({ mode }) => {
       build: {
         rollupOptions: {
           input: {
-            // FIX: Replaced `path.resolve(__dirname, ...)` with `path.resolve(...)` because `__dirname` is not available in ES modules by default. The path will be resolved from the project root, which is the intended behavior.
-            main: path.resolve('index.html'),
-            about: path.resolve('about.html'),
-            careers: path.resolve('careers.html'),
-            contact: path.resolve('contact.html'),
-            'architectural-design': path.resolve('architectural-design.html'),
-            'engineering-consultancy': path.resolve('engineering-consultancy.html'),
-            'project-management': path.resolve('project-management.html'),
-            'sustainability-energy': path.resolve('sustainability-energy.html'),
+            main: path.resolve(__dirname, 'index.html'),
+            about: path.resolve(__dirname, 'about.html'),
+            careers: path.resolve(__dirname, 'careers.html'),
+            contact: path.resolve(__dirname, 'contact.html'),
+            'architectural-design': path.resolve(__dirname, 'architectural-design.html'),
+            'engineering-consultancy': path.resolve(__dirname, 'engineering-consultancy.html'),
+            'project-management': path.resolve(__dirname, 'project-management.html'),
+            'sustainability-energy': path.resolve(__dirname, 'sustainability-energy.html'),
           },
         },
       },
