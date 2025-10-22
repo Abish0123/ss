@@ -552,7 +552,7 @@ const ServicePage = () => {
   const relatedProjects = [
     { image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=60", title: "Net-Zero Corporate Campus", category: "Sustainable Design" },
     { image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&auto=format&fit=crop&q=60", title: "Urban Solar Farm", category: "Renewable Energy" },
-    { image: "https://images.unsplash.com/photo-1597044542318-557342371e35?w=800&auto=format&fit=crop&q=60", title: "LEED Platinum Tower Retrofit", category: "Energy Auditing & Retrofitting" },
+    { image: "https://energyassist.ca/wp-content/uploads/2023/11/are-home-energy-audits-worth-it.jpg", title: "LEED Platinum Tower Retrofit", category: "Energy Auditing & Retrofitting" },
   ];
 
   return (
