@@ -507,7 +507,7 @@
       font-weight: 300;
       text-transform: uppercase;
       letter-spacing: 2px;
-      color: var(--text-dark);
+      color: #000;
   }
   .careers-hero-section h1 strong {
       font-weight: 700;
