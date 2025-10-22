@@ -1,6 +1,5 @@
 
-
-import React, { useState, useEffect, useRef, memo, MouseEventHandler, forwardRef } from 'react';
+import React, { useState, useEffect, useRef, memo, MouseEventHandler } from 'react';
 import { createRoot } from 'react-dom/client';
 
 declare const gsap: any;
@@ -26,13 +25,13 @@ const navLinks = [
 
 // --- SHARED & LAYOUT COMPONENTS ---
 
-const AppLink = forwardRef<HTMLAnchorElement, {
+const AppLink = ({ href, className = '', children, onClick, ...props }: {
   href: string;
   className?: string;
   children: React.ReactNode;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
   [key: string]: any;
-}>(({ href, className = '', children, onClick, ...props }, ref) => {
+}) => {
     const isToggle = href === '#';
 
     const handleClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
@@ -47,7 +46,6 @@ const AppLink = forwardRef<HTMLAnchorElement, {
 
     return (
         <a 
-            ref={ref}
             href={href} 
             className={className} 
             onClick={onClick ? handleClick : undefined} 
@@ -56,7 +54,7 @@ const AppLink = forwardRef<HTMLAnchorElement, {
             {children}
         </a>
     );
-});
+};
 
 const MobileNav = ({ isOpen, onClose }) => {
     const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -176,7 +174,7 @@ const Header = ({ theme }) => {
 
   useEffect(() => {
     if (isServicesDropdownOpen) {
-      const firstItem = servicesDropdownContainerRef.current?.querySelector<HTMLAnchorElement>('.dropdown-menu a');
+      const firstItem = servicesDropdownContainerRef.current?.querySelector<HTMLAnchorElement>('.dropdown-link-item');
       firstItem?.focus();
     }
   }, [isServicesDropdownOpen]);
@@ -212,12 +210,12 @@ const Header = ({ theme }) => {
         clearTimeout(timer);
     };
   }, []);
-
+  
   const handleServicesClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsServicesDropdownOpen(prev => !prev);
   };
-  
+
   const handleDropdownItemKeyDown = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
     const items = Array.from(
       servicesDropdownContainerRef.current?.querySelectorAll<HTMLAnchorElement>('.dropdown-link-item') || []
@@ -241,10 +239,15 @@ const Header = ({ theme }) => {
 
   return (
     <header className={headerClasses}>
+      <div className="logo">
+        <AppLink href="/index.html">
+          <img src="https://res.cloudinary.com/dj3vhocuf/image/upload/v1760896759/Blue_Bold_Office_Idea_Logo_250_x_80_px_7_uatyqd.png" alt="Taj Design Consult Logo" className="logo-image" />
+        </AppLink>
+      </div>
       <nav className="main-nav" aria-label="Main navigation">
         <ul ref={navRef}>
           {navLinks.map((link) => (
-            <li 
+             <li 
               key={link.name} 
               className={`${link.subLinks ? 'has-dropdown' : ''} ${link.name === 'Services' && isServicesDropdownOpen ? 'open' : ''}`}
               ref={link.name === 'Services' ? servicesDropdownContainerRef : null}
@@ -290,14 +293,9 @@ const Header = ({ theme }) => {
           ))}
         </ul>
       </nav>
-      <div className="logo">
-        <AppLink href="/index.html">
-          <img src="https://res.cloudinary.com/dj3vhocuf/image/upload/v1760896759/Blue_Bold_Office_Idea_Logo_250_x_80_px_7_uatyqd.png" alt="Taj Design Consult Logo" className="logo-image" />
-        </AppLink>
-      </div>
-      <button
+      <button 
         ref={burgerMenuRef}
-        className="burger-menu"
+        className="burger-menu" 
         onClick={() => setIsMobileNavOpen(true)}
         aria-label="Open navigation menu"
         aria-controls="mobile-nav"
@@ -305,7 +303,7 @@ const Header = ({ theme }) => {
       >
         <i className="fas fa-bars" aria-hidden="true"></i>
       </button>
-      <MobileNav isOpen={isMobileNavOpen} onClose={() => setIsMobileNavOpen(false)} />
+      <MobileNav isOpen={isMobileNavOpen} onClose={closeMobileNav} />
     </header>
   );
 };
@@ -595,7 +593,7 @@ const App = () => {
             <SkipToContentLink />
             <CustomCursor />
             <WhatsAppChatWidget />
-            <Header theme="light" />
+            <Header theme="dark" />
             <div className="main-container">
                 <LeftSidebar />
                 <main className="main-content" id="main-content" tabIndex={-1}>
