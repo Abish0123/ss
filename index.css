@@ -329,8 +329,8 @@
       border: 1px solid var(--border-light);
   }
   .app-header.on-light .dropdown-menu {
-      background-color: #fff;
-      border: 1px solid #eee;
+      background-color: #1a1a1a;
+      border: 1px solid var(--border-light);
   }
   
   .has-dropdown.open .dropdown-menu {
@@ -387,18 +387,15 @@
     color: var(--accent-color);
   }
   
-  .app-header.on-dark .dropdown-link-item { color: #ccc; }
-  .app-header.on-light .dropdown-link-item { color: #555; }
+  .app-header.on-dark .dropdown-link-item,
+  .app-header.on-light .dropdown-link-item { color: #ccc; }
   
   .app-header.on-dark .dropdown-link-item:hover,
-  .app-header.on-dark .dropdown-link-item:focus {
-    background-color: rgba(255, 255, 255, 0.08);
-    color: #fff;
-  }
+  .app-header.on-dark .dropdown-link-item:focus,
   .app-header.on-light .dropdown-link-item:hover,
   .app-header.on-light .dropdown-link-item:focus {
-    background-color: #e9e9e9;
-    color: #111;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #fff;
   }
   
   /* Burger Menu */
