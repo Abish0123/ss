@@ -1,4 +1,3 @@
-
 :root {
     --dark-bg: #111111;
     --dark-bg-secondary: #1c1c1c;
@@ -272,12 +271,12 @@
 
 .dropdown-menu {
   position: absolute;
-  top: calc(100% + 10px);
+  top: 100%;
   left: -20px;
   border-radius: 8px;
-  padding: 8px;
+  padding: 10px;
   list-style: none;
-  min-width: 280px;
+  min-width: 300px;
   z-index: 1001;
   opacity: 0;
   visibility: hidden;
@@ -313,7 +312,7 @@
 .dropdown-link-item {
   display: flex;
   align-items: center;
-  padding: 8px 12px;
+  padding: 12px 15px;
   border-radius: 6px;
   text-decoration: none;
   transition: background-color 0.2s ease, color 0.2s ease;
@@ -322,13 +321,14 @@
   font-size: 14px;
   letter-spacing: 0;
   white-space: nowrap;
+  margin: -4px;
 }
 .dropdown-link-item::after {
   display: none;
 }
 
 .dropdown-link-icon {
-  margin-right: 10px;
+  margin-right: 15px;
   font-size: 16px;
   width: 20px;
   text-align: center;
@@ -889,3 +889,4 @@
       .main-content { margin-left: 0; width: 100%; }
       .app-header { left: 0; width: 100%; padding: 20px; }
   }
+  
