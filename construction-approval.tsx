@@ -5,11 +5,11 @@ import { createRoot } from 'react-dom/client';
 declare const gsap: any;
 
 const servicesSubLinks = [
-  { name: 'Architectural Design', href: 'architectural-design.html', icon: 'fas fa-archway' },
-  { name: 'Engineering Consultancy', href: 'engineering-consultancy.html', icon: 'fas fa-cogs' },
-  { name: 'Project Management Consultancy', href: 'project-management.html', icon: 'fas fa-tasks' },
-  { name: 'Sustainability & Energy', href: 'sustainability-energy.html', icon: 'fas fa-leaf' },
-  { name: 'Approval for Construction', href: 'construction-approval.html', icon: 'fas fa-stamp' }
+  { name: 'Architectural Design', href: 'architectural-design.html', icon: 'fas fa-archway', description: 'Innovative and functional spaces from concept to construction.', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&auto=format&fit=crop&q=60' },
+  { name: 'Engineering Consultancy', href: 'engineering-consultancy.html', icon: 'fas fa-cogs', description: 'Expert technical advice and solutions for robust project outcomes.', image: 'https://images.unsplash.com/photo-1518692113669-e34fa251a37c?w=800&auto=format&fit=crop&q=60' },
+  { name: 'Project Management Consultancy', href: 'project-management.html', icon: 'fas fa-tasks', description: 'Overseeing projects from inception to completion on time and budget.', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop&q=60' },
+  { name: 'Sustainability & Energy', href: 'sustainability-energy.html', icon: 'fas fa-leaf', description: 'Integrating green principles for environmentally responsible designs.', image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&auto=format&fit=crop&q=60' },
+  { name: 'Construction Approval', href: 'construction-approval.html', icon: 'fas fa-check-double', description: 'Navigating regulatory hurdles to secure all necessary construction permits and approvals efficiently.', image: 'https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?w=800&auto=format&fit=crop&q=60' },
 ];
 
 const navLinks = [
@@ -100,7 +100,9 @@ const MobileNav = ({ isOpen, onClose }) => {
         return () => { document.body.style.overflow = ''; };
     }, [isOpen, onClose]);
 
-    const handleServicesToggle = () => setIsServicesOpen(prev => !prev);
+    const handleServicesToggle = () => {
+        setIsServicesOpen(prev => !prev);
+    }
     
     return (
         <div ref={navContainerRef} className={`mobile-nav-overlay ${isOpen ? 'open' : ''}`} role="dialog" aria-modal="true" aria-hidden={!isOpen} id="mobile-nav">
@@ -125,11 +127,7 @@ const MobileNav = ({ isOpen, onClose }) => {
                              {link.subLinks && (
                                  <ul id={`mobile-${link.name}-submenu`} className={`mobile-submenu ${isServicesOpen ? 'open' : ''}`} aria-hidden={!isServicesOpen}>
                                      {link.subLinks.map(subLink => (
-                                         <li key={subLink.name}>
-                                            <AppLink href={subLink.href} onClick={onClose}>
-                                                {subLink.name}
-                                            </AppLink>
-                                        </li>
+                                         <li key={subLink.name}><AppLink href={subLink.href} onClick={onClose}>{subLink.name}</AppLink></li>
                                      ))}
                                  </ul>
                              )}
@@ -155,6 +153,11 @@ const Header = ({ theme }) => {
   const burgerMenuRef = useRef<HTMLButtonElement>(null);
   const servicesToggleRef = useRef<HTMLAnchorElement>(null);
   const servicesDropdownContainerRef = useRef<HTMLLIElement>(null);
+
+  const closeMobileNav = () => {
+    setIsMobileNavOpen(false);
+    burgerMenuRef.current?.focus();
+  };
 
   const closeServicesDropdown = (shouldFocusToggle = true) => {
     if (isServicesDropdownOpen) {
@@ -195,16 +198,21 @@ const Header = ({ theme }) => {
   }, [isServicesDropdownOpen]);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const handleServicesClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsServicesDropdownOpen(prev => !prev);
   };
-  
+
   const handleDropdownItemKeyDown = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
     const items = Array.from(
       servicesDropdownContainerRef.current?.querySelectorAll<HTMLAnchorElement>('.dropdown-link-item') || []
@@ -228,10 +236,15 @@ const Header = ({ theme }) => {
 
   return (
     <header className={headerClasses}>
+      <div className="logo">
+        <AppLink href="/index.html">
+          <img src="https://res.cloudinary.com/dj3vhocuf/image/upload/v1760896759/Blue_Bold_Office_Idea_Logo_250_x_80_px_7_uatyqd.png" alt="Taj Design Consult Logo" className="logo-image" />
+        </AppLink>
+      </div>
       <nav className="main-nav" aria-label="Main navigation">
         <ul>
           {navLinks.map((link) => (
-             <li 
+            <li 
               key={link.name} 
               className={`${link.subLinks ? 'has-dropdown' : ''} ${link.name === 'Services' && isServicesDropdownOpen ? 'open' : ''}`}
               ref={link.name === 'Services' ? servicesDropdownContainerRef : null}
@@ -277,11 +290,6 @@ const Header = ({ theme }) => {
           ))}
         </ul>
       </nav>
-      <div className="logo">
-        <AppLink href="/index.html">
-          <img src="https://res.cloudinary.com/dj3vhocuf/image/upload/v1760896759/Blue_Bold_Office_Idea_Logo_250_x_80_px_7_uatyqd.png" alt="Taj Design Consult Logo" className="logo-image" />
-        </AppLink>
-      </div>
       <button 
         ref={burgerMenuRef}
         className="burger-menu" 
@@ -292,7 +300,7 @@ const Header = ({ theme }) => {
       >
         <i className="fas fa-bars" aria-hidden="true"></i>
       </button>
-      <MobileNav isOpen={isMobileNavOpen} onClose={() => setIsMobileNavOpen(false)} />
+      <MobileNav isOpen={isMobileNavOpen} onClose={closeMobileNav} />
     </header>
   );
 };
@@ -523,22 +531,22 @@ const ServicePage = () => {
   }, []);
 
   const services = [
-    'Building Permit Applications',
-    'Civil Defense Approval Coordination',
-    'Environmental Permit Assistance',
-    'Utility Connection Approvals (Water, Electricity)',
-    'Zoning and Land Use Compliance',
-    'Regulatory Advisory Services',
-    'Code Compliance Audits',
-    'Occupancy Certificate Procurement',
-    'Heritage and Conservation Area Approvals',
-    'Traffic Impact Study (TIS) Approvals'
+    'Initial Project Assessment & Regulatory Compliance Check',
+    'Building Permit (BP) Application Management (Baladiya)',
+    'DC1 & DC2 Submission, Tracking, and Follow-up',
+    'Utility Connections & NOCs (Kahramaa, Ooredoo)',
+    'Civil Defense (QCDD) Approval Coordination and Inspection Facilitation',
+    'Roads & Drainage NOCs (Ashghal)',
+    'Environmental Permits (Ministry of Environment and Climate Change)',
+    'Building Completion Certificate (BCC) Application and Acquisition',
+    'Regular Status Reporting and Authority Liaison',
+    'Comprehensive Management of All Required Documentation and Drawings',
   ];
 
   const relatedProjects = [
-    { image: "https://images.unsplash.com/photo-1581092446337-234557050003?w=800&auto=format&fit=crop&q=60", title: "Al Rayyan Commercial Tower", category: "Municipal & Civil Defense Approvals" },
-    { image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&auto=format&fit=crop&q=60", title: "The Pearl Residential Complex", category: "Comprehensive Permit Management" },
-    { image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&auto=format&fit=crop&q=60", title: "Doha Industrial Zone Expansion", category: "Environmental & Utility Clearances" },
+    { image: "https://images.unsplash.com/photo-1581092446337-234557050003?w=800&auto=format&fit=crop&q=60", title: "Al Sadd Commercial Tower", category: "Full Permit Lifecycle Management" },
+    { image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop&q=60", title: "West Bay Lagoon Villas", category: "Multi-Authority NOC Coordination" },
+    { image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=60", title: "Industrial Area Warehouse Complex", category: "Civil Defense & Environmental Clearances" },
   ];
 
   return (
@@ -550,9 +558,9 @@ const ServicePage = () => {
       <div className="main-container">
         <LeftSidebar />
         <main className="main-content" id="main-content" tabIndex={-1}>
-          <section className="service-hero-section scroll-trigger fade-up" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?w=1600&auto=format&fit=crop&q=60')`}}>
+          <section className="service-hero-section scroll-trigger fade-up" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1572949645841-094f3a9c4c94?w=1600&auto=format&fit=crop&q=60')`}}>
             <div className="container">
-              <h1 className="scroll-trigger fade-up" style={{transitionDelay: '0.1s'}}>Approval for <strong>Construction</strong></h1>
+              <h1 className="scroll-trigger fade-up" style={{transitionDelay: '0.1s'}}>Construction <strong>Approval</strong></h1>
             </div>
           </section>
 
@@ -560,20 +568,16 @@ const ServicePage = () => {
             <div className="container">
               <div className="service-content-grid scroll-trigger fade-up" style={{transitionDelay: '0.2s'}}>
                 <div className="service-main-content">
-                  <p>
-                    Navigating the complex landscape of construction approvals is a critical step in any project's lifecycle. Taj Design Consult streamlines this process by leveraging our deep understanding of local regulations and strong relationships with authorities, including municipalities and civil defense. We manage all required documentation and submissions to ensure your project complies with all legal requirements, preventing costly delays and ensuring a smooth path from design to construction.
-                  </p>
-                  <p>
-                    Our proactive approach involves meticulous preparation of all necessary paperwork, from building permits to utility connection clearances. We act as your single point of contact, coordinating with various governmental agencies to secure approvals efficiently. Our goal is to demystify the regulatory maze, allowing you to focus on your project's vision while we handle the critical administrative and compliance tasks that keep your project on schedule.
-                  </p>
+                    <p>Navigating Qatar’s complex regulatory landscape is one of the most critical challenges in any construction project. Our dedicated Construction Approval team specializes in streamlining this process, acting as your expert liaison with all government authorities. We manage the entire lifecycle of approvals, from initial compliance checks to securing the final Building Completion Certificate (BCC). Our deep understanding of the requirements set by Baladiya (Municipality), the Building Permit Complex (DC1/DC2), Kahramaa, Ooredoo, Ashghal, and the Qatar Civil Defense Department (QCDD) ensures a smooth and predictable path to construction.</p>
+                    <p>By entrusting us with your project approvals, you mitigate risks, avoid costly delays, and ensure full compliance with all local laws and building codes. Our established relationships with key authorities and our meticulous approach to documentation management allow us to anticipate hurdles and resolve issues proactively. We provide complete transparency throughout the process, giving you the peace of mind to focus on your core project objectives while we handle the critical administrative and regulatory groundwork.</p>
                 </div>
                 <div className="service-sidebar-image">
-                  <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=800&auto=format&fit=crop&q=60" alt="Official signing construction approval documents" />
+                  <img src="https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?w=800&auto=format&fit=crop&q=60" alt="Official documents and a hard hat on a blueprint." />
                 </div>
               </div>
 
               <div className="service-list-section scroll-trigger fade-up" style={{transitionDelay: '0.3s'}}>
-                <h2 className="section-title">Our Approval services include:</h2>
+                <h2 className="section-title">Our Construction Approval services include:</h2>
                 <ul className="service-list">
                   {services.map((service, index) => (
                     <li key={index}>
@@ -587,7 +591,7 @@ const ServicePage = () => {
             </div>
           </section>
 
-          <RelatedProjects projects={relatedProjects} title="Statutory Approvals" />
+          <RelatedProjects projects={relatedProjects} title="Permit Approvals" />
           <CallToAction />
 
           <footer id="footer" className="app-footer">
