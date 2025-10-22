@@ -1146,7 +1146,7 @@ const HomePage = () => {
       description: "End-to-end office interior design and on-site supervision, ensuring QCDD/NFPA and Baladiya compliance for a smooth, approval-ready fit-out." 
     },
     { 
-      image: "https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?w=1200&auto=format&fit=crop&q=60", 
+      image: "https://res.cloudinary.com/dj3vhocuf/image/upload/v1761148974/Screenshot_2025-10-22_212957_yzlxxb.png", 
       meta: "Design and Supervision of Office Interior", 
       title: "World Wide Business Center", 
       description: "A 2,000 sqm office blending elegant aesthetics with high functionality, featuring collaborative zones, meeting rooms, and a dedicated games area." 
