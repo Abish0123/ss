@@ -544,7 +544,7 @@ const ServicePage = () => {
 
   const relatedProjects = [
     { image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&auto=format&fit=crop&q=60", title: "Metropolis Tower", category: "High-Rise Construction" },
-    { image: "https://images.unsplash.com/photo-1572949645841-094f3a9c4c94?w=800&auto=format&fit=crop&q=60", title: "Coastal Resort Complex", category: "Hospitality Project Management" },
+    { image: "https://media.istockphoto.com/id/154962832/photo/machine-blueprint-outline-design-paperwork-document.jpg?s=612x612&w=0&k=20&c=F9UR8XhvUC3kt-LZjjxpN8pcp_ZT6yKFQ9NFWvAAoFo=", title: "Coastal Resort Complex", category: "Hospitality Project Management" },
     { image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&auto=format&fit=crop&q=60", title: "Civic Center Redevelopment", category: "Public Sector Projects" },
   ];
 
