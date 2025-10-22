@@ -1152,7 +1152,7 @@ const HomePage = () => {
       description: "A 2,000 sqm office blending elegant aesthetics with high functionality, featuring collaborative zones, meeting rooms, and a dedicated games area." 
     },
     { 
-      image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=1200&auto=format&fit=crop&q=60", 
+      image: "https://res.cloudinary.com/dj3vhocuf/image/upload/v1761148974/Screenshot_2025-10-22_213038_l4jyns.png", 
       meta: "Design and Municipality Approvals", 
       title: "Al Jabor Building", 
       description: "Full interior reconfiguration of a commercial building, expediting the permitting path with QCDD and Baladiya approvals for a faster time-to-market." 
