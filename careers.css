@@ -860,6 +860,7 @@
   .scroll-trigger.visible {
     opacity: 1;
     transform: none;
+    color: #000;
   }
   /* Responsive Styles */
   @media (max-width: 1200px) {
