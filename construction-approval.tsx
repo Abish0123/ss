@@ -558,7 +558,7 @@ const ServicePage = () => {
       <div className="main-container">
         <LeftSidebar />
         <main className="main-content" id="main-content" tabIndex={-1}>
-          <section className="service-hero-section scroll-trigger fade-up" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1572949645841-094f3a9c4c94?w=1600&auto=format&fit=crop&q=60')`}}>
+          <section className="service-hero-section scroll-trigger fade-up" style={{ backgroundImage: `url('https://media.licdn.com/dms/image/v2/D5612AQEPHDa_jIUW7Q/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1697475482996?e=2147483647&v=beta&t=W5MXkjDsRTLPnFm86_9pZBlOevq4E3AXCRzXbk8rFZc')`}}>
             <div className="container">
               <h1 className="scroll-trigger fade-up" style={{transitionDelay: '0.1s'}}>Construction <strong>Approval</strong></h1>
             </div>
