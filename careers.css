@@ -583,7 +583,7 @@
   .application-form select {
       background-color: #f4f4f4;
       border: 1px solid #ddd;
-      color: var(--text-dark);
+      color: #111;
       padding: 12px;
       border-radius: 4px;
       font-family: inherit;
@@ -889,4 +889,3 @@
       .main-content { margin-left: 0; width: 100%; }
       .app-header { left: 0; width: 100%; padding: 20px; }
   }
-  
