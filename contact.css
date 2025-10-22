@@ -201,7 +201,7 @@ html, body {
 /* General Section Styling */
 .content-section { padding: 100px 60px; }
 .container { max-width: 1100px; margin: 0 auto; }
-.section-title { font-size: 36px; font-weight: 300; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; color: #FFF; }
+.section-title { font-size: 36px; font-weight: 300; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; color: #000; }
 .section-title strong { font-weight: 700; }
 
 /* Details Section */
